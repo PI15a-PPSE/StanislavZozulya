@@ -11,3 +11,21 @@ h1{
 	color: #776e65;
     text-align: center;
 }
+
+#score{
+    text-align: center;
+}
+
+.clear{
+    clear: both;
+}
+
+#size-bloc{
+    margin-left: -50px;
+    padding-left: 50%;
+}
+
+#size-title{
+    float: left;
+    margin-top: 0px;
+}
