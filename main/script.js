@@ -13,8 +13,18 @@ var cells = [];
 var fontSize;
 var loss = false;
 
+/**
+*Method that starts game
+*
+* @author       Stanislav Zozulya
+* @version      1.0
+* @copyright    GNU Public License
+*/
 startGame();
 
+/**
+* Allowing to change the size of the playground
+*/
 changeSize.onclick = function () {
 	if (sizeInput.value >= 2 && sizeInput.value <= 20) {
 		size = sizeInput.value;
@@ -25,12 +35,18 @@ changeSize.onclick = function () {
 	}
 }
 
+/**
+* Sets grid
+*/
 function cell(row, coll) {
 	this.value = 0;
 	this.x = coll * width + 5 * (coll + 1);
 	this.y = row * width + 5 * (row + 1);
 }
 
+/**
+* Allowing to create cells on the playground
+*/
 function createCells() {
 	var i, j;
 	for(i = 0; i < size; i++) {
@@ -41,6 +57,12 @@ function createCells() {
 	}
 }
 
+/**
+* Set colors to the cells
+*
+*
+*@param var cells
+*/
 function drawCell(cell) {
 	ctx.beginPath();
 	ctx.rect(cell.x, cell.y, width, width);
@@ -70,10 +92,16 @@ function drawCell(cell) {
 	}
 }
 
+/**
+* Clear canvas when the new game starts
+*/
 function canvasClean() {
 	ctx.clearRect(0, 0, 500, 500);
 }
 
+/**
+* Set keycodes to control the cells
+*/
 document.onkeydown = function (event) {
 	if (!loss) {
 		if (event.keyCode === 38 || event.keyCode === 87) {
@@ -89,6 +117,9 @@ document.onkeydown = function (event) {
 	}
 }
 
+/**
+* Allowing to start the game with these parameters
+*/
 function startGame() {
 	createCells();
 	drawAllCells();
@@ -96,11 +127,17 @@ function startGame() {
 	pasteNewCell();
 }
 
+/**
+* Set opacity to 50%, when the game is over
+*/
 function finishGame() {
 	canvas.style.opacity = '0.5';
 	loss = true;
 }
 
+/**
+* Allowing to draw cell
+*/
 function drawAllCells() {
 	var i, j;
 	for(i = 0; i < size; i++) {
@@ -110,6 +147,9 @@ function drawAllCells() {
 	}
 }
 
+/**
+* Pastes new cell every turn and at the start
+*/
 function pasteNewCell() {
 	var countFree = 0;
 	var i, j;
@@ -135,6 +175,9 @@ function pasteNewCell() {
 	}
 }
 
+/**
+* Allowing to move cells right
+*/
 function moveRight () {
 	var i, j;
 	var coll;
@@ -162,6 +205,9 @@ function moveRight () {
 	pasteNewCell();
 }
 
+/**
+* Allowing to move cells left
+*/
 function moveLeft() {
 	var i, j;
 	var coll;
@@ -189,6 +235,9 @@ function moveLeft() {
 	pasteNewCell();
 }
 
+/**
+* Allowing to move cells up
+*/
 function moveUp() {
 	var i, j, row;
 	for(j = 0; j < size; j++) {
@@ -215,6 +264,9 @@ function moveUp() {
 	pasteNewCell();
 }
 
+/**
+* Allowing to move cells down
+*/
 function moveDown() {
 	var i, j, row;
 	for(j = 0; j < size; j++) {
