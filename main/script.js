@@ -88,3 +88,155 @@ document.onkeydown = function (event) {
 		scoreLabel.innerHTML = 'Score : ' + score;
 	}
 }
+
+function startGame() {
+	createCells();
+	drawAllCells();
+	pasteNewCell();
+	pasteNewCell();
+}
+
+function finishGame() {
+	canvas.style.opacity = '0.5';
+	loss = true;
+}
+
+function drawAllCells() {
+	var i, j;
+	for(i = 0; i < size; i++) {
+		for(j = 0; j < size; j++) {
+			drawCell(cells[i][j]);
+		}
+	}
+}
+
+function pasteNewCell() {
+	var countFree = 0;
+	var i, j;
+	for(i = 0; i < size; i++) {
+		for(j = 0; j < size; j++) {
+			if(!cells[i][j].value) {
+				countFree++;
+			}
+		}
+	}
+	if(!countFree) {
+		finishGame();
+		return;
+	}
+	while(true) {
+		var row = Math.floor(Math.random() * size);
+		var coll = Math.floor(Math.random() * size);
+		if(!cells[row][coll].value) {
+			cells[row][coll].value = 2 * Math.ceil(Math.random() * 2);
+			drawAllCells();
+			return;
+		}
+	}
+}
+
+function moveRight () {
+	var i, j;
+	var coll;
+	for(i = 0; i < size; i++) {
+		for(j = size - 2; j >= 0; j--) {
+			if(cells[i][j].value) {
+				coll = j;
+				while (coll + 1 < size) {
+					if (!cells[i][coll + 1].value) {
+						cells[i][coll + 1].value = cells[i][coll].value;
+						cells[i][coll].value = 0;
+						coll++;
+					} else if (cells[i][coll].value == cells[i][coll + 1].value) {
+						cells[i][coll + 1].value *= 2;
+						score +=  cells[i][coll + 1].value;
+						cells[i][coll].value = 0;
+						break;
+					} else {
+						break;
+					}
+				}
+			}
+		}
+	}
+	pasteNewCell();
+}
+
+function moveLeft() {
+	var i, j;
+	var coll;
+	for(i = 0; i < size; i++) {
+		for(j = 1; j < size; j++) {
+			if(cells[i][j].value) {
+				coll = j;
+				while (coll - 1 >= 0) {
+					if (!cells[i][coll - 1].value) {
+						cells[i][coll - 1].value = cells[i][coll].value;
+						cells[i][coll].value = 0;
+						coll--;
+					} else if (cells[i][coll].value == cells[i][coll - 1].value) {
+						cells[i][coll - 1].value *= 2;
+						score +=   cells[i][coll - 1].value;
+						cells[i][coll].value = 0;
+						break;
+					} else {
+						break; 
+					}
+				}
+			}
+		}
+	}
+	pasteNewCell();
+}
+
+function moveUp() {
+	var i, j, row;
+	for(j = 0; j < size; j++) {
+		for(i = 1; i < size; i++) {
+			if(cells[i][j].value) {
+				row = i;
+				while (row > 0) {
+					if(!cells[row - 1][j].value) {
+						cells[row - 1][j].value = cells[row][j].value;
+						cells[row][j].value = 0;
+						row--;
+					} else if (cells[row][j].value == cells[row - 1][j].value) {
+						cells[row - 1][j].value *= 2;
+						score +=  cells[row - 1][j].value;
+						cells[row][j].value = 0;
+						break;
+					} else {
+						break; 
+					}
+				}
+			}
+		}
+	}
+	pasteNewCell();
+}
+
+function moveDown() {
+	var i, j, row;
+	for(j = 0; j < size; j++) {
+		for(i = size - 2; i >= 0; i--) {
+			if(cells[i][j].value) {
+				row = i;
+				while (row + 1 < size) {
+					if (!cells[row + 1][j].value) {
+						cells[row + 1][j].value = cells[row][j].value;
+						cells[row][j].value = 0;
+						row++;
+					} else if (cells[row][j].value == cells[row + 1][j].value) {
+						cells[row + 1][j].value *= 2;
+						score +=  cells[row + 1][j].value;
+						cells[row][j].value = 0;
+						break;
+					} else {
+						break; 
+					}
+				}
+			}
+		}
+	}
+	pasteNewCell();
+}
