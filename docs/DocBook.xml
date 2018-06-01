@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE glossary PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
-<glossary>
-  <glossdiv>
+<article version="5.1" xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xila="http://www.w3.org/2001/XInclude/local-attributes"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:trans="http://docbook.org/ns/transclusion"
+         xmlns:svg="http://www.w3.org/2000/svg"
+         xmlns:m="http://www.w3.org/1998/Math/MathML"
+         xmlns:html="http://www.w3.org/1999/xhtml"
+         xmlns:db="http://docbook.org/ns/docbook">
+  <info>
     <title>Программный продукт 2048</title>
 
-    <glossentry>
-      <glossterm>1. Описание продукта</glossterm>
+    <author>
+      <personname><firstname>Stanislav</firstname><surname>Zozulya</surname></personname>
 
-      <glossdef>
-        <para>Программный продукт <emphasis role="bold">Tic-Tac-Toe</emphasis>
-        был разработан для развлечения. Игра содержит в себе редактируемое
-        поле от 2*2 до 20*20 и предназначена для 1 игрока.</para>
-      </glossdef>
-    </glossentry>
+      <affiliation>
+        <orgname>Z Corporation</orgname>
+      </affiliation>
+    </author>
 
-    <glossentry>
-      <glossterm>2. Первый запуск</glossterm>
+    <pubdate>01.06.2018</pubdate>
+  </info>
 
-      <glossdef>
-        <para>При первом запуске игры пользователю будет предоставлено
-        стандартное поле 4*4, размер которого обрабатывается следующей
-        функцией:</para>
+  <section>
+    <title>Описание продукта</title>
 
-        <programlisting>changeSize.onclick = function () {
+    <para>Программный продукт 2048 был разработан для развлечения. Игра
+    содержит в себе редактируемое поле от 2*2 до 20*20.</para>
+  </section>
+
+  <section>
+    <title>Первый запуск</title>
+
+    <para>При первом запуске игры пользователю будет предоставлено стандартное
+    поле 4*4, размер которого обрабатывается следующей функцией:</para>
+
+    <programlisting>changeSize.onclick = function () {
  if (sizeInput.value &gt;= 2 &amp;&amp; sizeInput.value &lt;= 20) {
     size = sizeInput.value;
     width = canvas.width / size - 6;
@@ -33,59 +45,58 @@
   }
 }</programlisting>
 
-        <address> Движение ячеек осущесвляется  помощью стрелок или W, A, S и D.</address>
+    <para>Движение ячеек осущесвляется помощью стрелок или W, A, S и D.</para>
 
-        <programlisting>document.onkeydown = function (event) {
-if (!loss) {
-if (event.keyCode === 38 || event.keyCode === 87) {
-moveUp(); 
-} else if (event.keyCode === 39 || event.keyCode === 68) {
-moveRight();
-} else if (event.keyCode === 40 || event.keyCode === 83) {
-moveDown(); 
-} else if (event.keyCode === 37 || event.keyCode === 65) {
-moveLeft(); 
-}
-scoreLabel.innerHTML = 'Score : ' + score;
-}
+    <programlisting>document.onkeydown = function (event) {
+    if (!loss) {
+    if (event.keyCode === 38 || event.keyCode === 87) {
+        moveUp(); 
+    } else if (event.keyCode === 39 || event.keyCode === 68) {
+        moveRight();
+    } else if (event.keyCode === 40 || event.keyCode === 83) {
+        moveDown(); 
+    } else if (event.keyCode === 37 || event.keyCode === 65) {
+        moveLeft(); 
+    }
+    scoreLabel.innerHTML = 'Score : ' + score;
+    }
 }</programlisting>
 
-        <literallayout>Каждый ход производится проверка по наличию свободных ячеек для заполнения. Если же все ячейки на момент начала хода будут заняты, ты игра будет проиграна.
-Код завершения игры предоставлен ниже:</literallayout>
+    <para>Каждый ход производится проверка по наличию свободных ячеек для
+    заполнения. Если же все ячейки на момент начала хода будут заняты, ты игра
+    будет проиграна. Код завершения игры предоставлен ниже:</para>
 
-        <programlisting>function finishGame() {
+    <programlisting>function finishGame() {
     canvas.style.opacity = '0.5';
     loss = true;
 }
 
 function pasteNewCell() {
- var countFree = 0;
- var i, j;
- for(i = 0; i &lt; size; i++) {
- for(j = 0; j &lt; size; j++) {
-  if(!cells[i][j].value) {
-   countFree++;
-   }
-  }
+    var countFree = 0;
+    var i, j;
+    for(i = 0; i &lt; size; i++) {
+        for(j = 0; j &lt; size; j++) {
+        if(!cells[i][j].value) {
+        countFree++;
+        }
+    }
 }
- if(!countFree) {
- finishGame();
- return;
+    if(!countFree) {
+    finishGame();
+    return;
 }
 while(true) {
 var row = Math.floor(Math.random() * size);
 var coll = Math.floor(Math.random() * size);
 if(!cells[row][coll].value) {
    cells[row][coll].value = 2 * Math.ceil(Math.random() * 2);
-   drawAllCells();
-   return;
-  }
- }
+        drawAllCells();
+        return;
+        }
+    }
 }</programlisting>
 
-        <para>Таким образом, было рассмотрено 3 варианта развития событий
-        вместе с приведенным кодом.</para>
-      </glossdef>
-    </glossentry>
-  </glossdiv>
-</glossary>
+    <para>Таким образом, было рассмотрено 3 варианта развития событий вместе с
+    приведенным кодом.</para>
+  </section>
+</article>
